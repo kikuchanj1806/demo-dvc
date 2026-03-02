@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chuyên mục Bầu cử - Cổng thông tin điện tử Xã ...</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --red:#b00600;
+      --red2:#8f0500;
+      --gold:#f6d36b;
+      --cream:#fff7df;
+    }
+
+    body{
+      background:#f3f4f6;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* Header giống cổng thông tin */
+    .portal-header{
+      background: radial-gradient(circle at 25% 20%, #fff 0, #fff6d8 25%, #f5d27b 60%, #f0c25e 100%);
+      border-bottom: 4px solid var(--red);
+      position: relative;
+      overflow:hidden;
+    }
+    .portal-header::before{
+      content:"";
+      position:absolute; inset:-40px -80px auto -80px;
+      height:240px;
+      background: repeating-linear-gradient(135deg, rgba(255,255,255,.22) 0 14px, rgba(255,255,255,0) 14px 28px);
+      opacity:.35;
+      pointer-events:none;
+    }
+    .crest{
+      width:56px;height:56px;border-radius:50%;
+      background: linear-gradient(135deg, #ffd36a, #ff8a7a);
+      border: 3px solid rgba(255,255,255,.8);
+      box-shadow: 0 10px 22px rgba(0,0,0,.12);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;color:#7a0a00;
+      flex:0 0 auto;
+    }
+
+    .portal-menu{
+      background: var(--red);
+      border-top: 1px solid rgba(255,255,255,.2);
+      border-bottom: 3px solid var(--red2);
+    }
+    .portal-menu .nav-link{
+      color:#fff !important;
+      text-transform:uppercase;
+      font-weight:700;
+      font-size:13px;
+      border-radius:0;
+      border-right: 1px solid rgba(255,255,255,.18);
+    }
+    .portal-menu .nav-link:hover{ background: rgba(0,0,0,.12); }
+    .portal-menu .nav-link.active{ background: rgba(0,0,0,.18); }
+
+    .newsbar{
+      background:#e5e7eb;
+      border-bottom: 1px solid #d1d5db;
+    }
+    .marquee{
+      background:#fff;
+      border:1px solid #d1d5db;
+      border-radius: .5rem;
+      overflow:hidden;
+      padding: .4rem .6rem;
+      position:relative;
+    }
+    .marquee span{
+      display:inline-block;
+      white-space:nowrap;
+      animation: scroll 14s linear infinite;
+      color:var(--red);
+      font-weight:700;
+      font-size:13px;
+    }
+    @keyframes scroll{
+      from{ transform: translateX(100%);}
+      to{ transform: translateX(-110%);}
+    }
+
+    /* Card header đỏ kiểu portal */
+    .card-portal-header{
+      background: var(--red);
+      color:#fff;
+      text-transform:uppercase;
+      font-weight:900;
+      font-size:13px;
+      letter-spacing:.2px;
+    }
+
+    /* Khối tra cứu */
+    .lookup{
+      background: var(--cream);
+      border:1px solid #f1c75e;
+    }
+
+    /* Candidate list item clickable */
+    .candidate-item{
+      cursor:pointer;
+      transition: transform .08s ease, box-shadow .08s ease, border-color .08s ease;
+    }
+    .candidate-item:hover{
+      transform: translateY(-1px);
+      border-color: #fca5a5 !important;
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,.08);
+    }
+    .candidate-photo{
+      height:140px;
+      background: linear-gradient(135deg,#e5e7eb,#fff);
+      display:flex;align-items:center;justify-content:center;
+      color:#6b7280;
+      font-weight:900;
+      font-size:12px;
+      text-transform:uppercase;
+    }
+
+    /* Nav pills giống portal */
+    .nav-pills .nav-link{
+      border:1px solid #e5e7eb;
+      background:#fff;
+      color:#111827;
+      font-weight:800;
+    }
+    .nav-pills .nav-link.active{
+      background: linear-gradient(135deg, #fecaca, #fde68a);
+      border-color:#fca5a5;
+      color:#7a0a00;
+    }
+
+    footer{
+      background: var(--red);
+      color:#fff;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="portal-header">
+    <div class="container position-relative py-3">
+      <div class="d-flex align-items-center gap-3">
+        <div class="crest">QH</div>
+        <div>
+          <div class="text-uppercase fw-bold" style="color:#0f2a4d; letter-spacing:.4px;">Cổng thông tin điện tử</div>
+          <div class="text-uppercase fw-bold" style="color:var(--red); font-size:28px; letter-spacing:.8px;">Xã …</div>
+          <div class="text-secondary fw-semibold">Chuyên mục: Bầu cử đại biểu Quốc hội & HĐND các cấp</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MENU -->
+    <nav class="portal-menu">
+      <div class="container">
+        <ul class="nav flex-wrap">
+          <li class="nav-item"><a class="nav-link active" href="#">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Tin tức - Sự kiện</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Tiếp cận thông tin</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Thông tin chuyên đề</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Cải cách hành chính</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Bầu cử 2026 - 2031</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- NEWSBAR -->
+    <div class="newsbar">
+      <div class="container py-2">
+        <div class="row g-2 align-items-center">
+          <div class="col-lg-8">
+            <div class="marquee" aria-label="Tin chạy">
+              <span>Chuyên mục Bầu cử 2026–2031 • Tra cứu đơn vị bầu cử theo CCCD • Xem thông tin ứng cử viên • Tin tức & thư viện ảnh…</span>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="input-group">
+              <input class="form-control" placeholder="Nhập tìm kiếm..." />
+              <button class="btn" style="background:var(--red);color:#fff;font-weight:900">🔍</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container my-3">
+    <div class="row g-3">
+      <!-- LEFT -->
+      <div class="col-lg-9">
+
+        <!-- TIN NỔI BẬT -->
+        <section class="card shadow-sm">
+          <div class="card-header card-portal-header d-flex justify-content-between align-items-center">
+            <span>Tin nổi bật</span>
+            <small class="fw-semibold text-white-50">Chuyên mục bầu cử</small>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-lg-8">
+                <div class="border rounded overflow-hidden position-relative" style="height:320px;background:#111827;">
+                  <div class="position-absolute inset-0 w-100 h-100 d-flex align-items-center justify-content-center text-white-50 fw-bold">
+                    Ảnh banner / bài nổi bật
+                  </div>
+                  <div class="position-absolute bottom-0 start-0 end-0 p-2 text-white fw-bold"
+                       style="background:rgba(0,0,0,.62); text-transform:uppercase;">
+                    Hải Phòng hoàn thành công tác chuẩn bị bầu cử…
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="vstack gap-2">
+                  <a class="d-flex gap-2 p-2 bg-white border rounded text-decoration-none" href="#" onclick="alert('Demo: mở bài viết')">
+                    <div class="rounded" style="width:74px;height:52px;background:linear-gradient(135deg,#fde68a,#fecaca);border:1px solid #f3f4f6;"></div>
+                    <div>
+                      <div class="fw-bold" style="font-size:13px">Niêm yết danh sách cử tri tại các điểm…</div>
+                      <div class="text-muted" style="font-size:12px">Ngày đăng: 12/02/2026</div>
+                    </div>
+                  </a>
+                  <a class="d-flex gap-2 p-2 bg-white border rounded text-decoration-none" href="#" onclick="alert('Demo: mở bài viết')">
+                    <div class="rounded" style="width:74px;height:52px;background:linear-gradient(135deg,#fde68a,#fecaca);border:1px solid #f3f4f6;"></div>
+                    <div>
+                      <div class="fw-bold" style="font-size:13px">Hỏi đáp bầu cử Quốc hội & HĐND…</div>
+                      <div class="text-muted" style="font-size:12px">Ngày đăng: 08/02/2026</div>
+                    </div>
+                  </a>
+                  <a class="d-flex gap-2 p-2 bg-white border rounded text-decoration-none" href="#" onclick="alert('Demo: mở bài viết')">
+                    <div class="rounded" style="width:74px;height:52px;background:linear-gradient(135deg,#fde68a,#fecaca);border:1px solid #f3f4f6;"></div>
+                    <div>
+                      <div class="fw-bold" style="font-size:13px">Kế hoạch tuyên truyền bầu cử 2026…</div>
+                      <div class="text-muted" style="font-size:12px">Ngày đăng: 05/02/2026</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TRA CỨU -->
+        <section class="card shadow-sm mt-3">
+          <div class="card-header card-portal-header d-flex justify-content-between align-items-center">
+            <span>Tra cứu đơn vị bầu cử</span>
+            <small class="fw-semibold text-white-50">Họ tên + CCCD</small>
+          </div>
+          <div class="card-body">
+            <div class="p-3 rounded lookup">
+              <div class="fw-bold text-uppercase mb-2" style="color:#7a0a00;font-size:14px">Tra cứu thông tin công dân</div>
+
+              <div class="row g-2 align-items-end">
+                <div class="col-md-5">
+                  <label class="form-label fw-bold" style="font-size:12px">Họ và tên</label>
+                  <input class="form-control" id="inpName" placeholder="Ví dụ: Nguyễn Văn A" />
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label fw-bold" style="font-size:12px">Số CCCD</label>
+                  <input class="form-control" id="inpCccd" inputmode="numeric" placeholder="Ví dụ: 012345678901" />
+                </div>
+                <div class="col-md-2 d-grid">
+                  <button class="btn btn-danger" style="background:var(--red);border-color:var(--red);font-weight:900;text-transform:uppercase;font-size:12px"
+                          onclick="mockLookup()">Tra cứu</button>
+                </div>
+              </div>
+
+              <div id="resultBox" class="mt-3 p-3 bg-white rounded border border-warning border-dashed" style="display:none;">
+                <div class="fw-bold" style="color:#7a0a00">Kết quả:</div>
+                <div id="resultText" class="mt-1"></div>
+              </div>
+            </div>
+
+            <div class="text-muted mt-2" style="font-size:12px">
+              * Dữ liệu tra cứu lấy từ Excel do Admin upload theo từng Đơn vị bầu cử.
+            </div>
+          </div>
+        </section>
+
+        <!-- ỨNG CỬ VIÊN (tabs + list + modal) -->
+        <section class="card shadow-sm mt-3">
+          <div class="card-header card-portal-header d-flex justify-content-between align-items-center">
+            <span>Thông tin đại biểu ứng cử</span>
+            <small class="fw-semibold text-white-50">Click để xem chi tiết</small>
+          </div>
+
+          <div class="card-body">
+            <!-- Tabs bằng Bootstrap pills -->
+            <ul class="nav nav-pills gap-2 mb-3" id="candidateTabs">
+              <li class="nav-item">
+                <button class="nav-link active" type="button" data-type="qh">Quốc hội</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" type="button" data-type="tp">HĐND TP</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" type="button" data-type="xa">HĐND Xã</button>
+              </li>
+            </ul>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="fw-bold text-uppercase" id="candTitle" style="font-size:13px;color:#153352;">
+                Quốc hội • Danh sách ứng cử
+              </div>
+            </div>
+
+            <div id="candList"></div>
+
+            <div class="text-muted mt-2" style="font-size:12px">
+              * Dữ liệu thực tế có thể là poster/infographic hoặc ảnh theo từng ứng cử viên.
+            </div>
+          </div>
+        </section>
+
+        <!-- TIN TỨC -->
+        <section class="card shadow-sm mt-3">
+          <div class="card-header card-portal-header d-flex justify-content-between align-items-center">
+            <span>Tin tức bầu cử</span>
+            <small class="fw-semibold text-white-50">Link cổng thông tin</small>
+          </div>
+          <div class="card-body">
+            <div class="vstack gap-2">
+              <div class="p-2 bg-white border rounded">
+                <div class="fw-bold text-uppercase" style="font-size:13px">Thông báo về việc niêm yết danh sách cử tri…</div>
+                <div class="text-muted" style="font-size:12px">Link mở sang cổng thông tin xã/TP. (Demo)</div>
+              </div>
+              <div class="p-2 bg-white border rounded">
+                <div class="fw-bold text-uppercase" style="font-size:13px">Nghị quyết công bố danh sách chính thức người ứng cử…</div>
+                <div class="text-muted" style="font-size:12px">Link mở sang cổng thông tin xã/TP. (Demo)</div>
+              </div>
+              <div class="p-2 bg-white border rounded">
+                <div class="fw-bold text-uppercase" style="font-size:13px">Hưởng ứng cuộc thi trực tuyến tìm hiểu bầu cử…</div>
+                <div class="text-muted" style="font-size:12px">Link mở sang cổng thông tin xã/TP. (Demo)</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- RIGHT -->
+      <aside class="col-lg-3">
+
+        <div class="card shadow-sm">
+          <div class="card-header bg-white fw-bold text-uppercase" style="font-size:13px;border-left:4px solid var(--red);">
+            🔎 Tìm kiếm
+          </div>
+          <div class="card-body">
+            <input class="form-control" placeholder="Nhập tìm kiếm..." />
+          </div>
+        </div>
+
+        <div class="card shadow-sm mt-3">
+          <div class="card-header bg-white fw-bold text-uppercase" style="font-size:13px;border-left:4px solid var(--red);">
+            ❖ Tin mới
+          </div>
+          <div class="list-group list-group-flush">
+            <a class="list-group-item list-group-item-action" href="#">Khuyến cáo phòng chống rét cho cây…</a>
+            <a class="list-group-item list-group-item-action" href="#">Phát huy quyền làm chủ của Nhân dân…</a>
+            <a class="list-group-item list-group-item-action" href="#">Tổ chức hội nghị tiếp xúc cử tri…</a>
+            <a class="list-group-item list-group-item-action" href="#">Thông báo về kế hoạch tuyên truyền…</a>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-4">
+    <div class="container py-3">
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div class="fw-bold" style="font-size:16px">Cổng Thông tin điện tử Xã …, thành phố …</div>
+          <div>Chịu trách nhiệm nội dung: …</div>
+          <div>Địa chỉ: …</div>
+          <div>Điện thoại: …</div>
+          <div>Email: …@…gov.vn</div>
+        </div>
+        <div class="col-lg-4">
+          <div class="border rounded p-3" style="background:rgba(0,0,0,.10)">
+            <div class="fw-bold">Chứng nhận tín nhiệm mạng</div>
+            <div class="text-white-50">Khu vực hiển thị badge/chứng nhận (demo)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Bootstrap -->
+  <div class="modal fade" id="candidateModal" tabindex="-1" aria-labelledby="candidateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background:var(--red);color:#fff">
+          <h5 class="modal-title" id="candidateModalLabel">Thông tin ứng cử viên</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div id="candModalPoster"
+                   class="rounded border d-flex align-items-center justify-content-center"
+                   style="height:220px;background:linear-gradient(135deg,#e5e7eb,#fff);color:#6b7280;font-weight:800;">
+                Ảnh/Poster
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="fw-bold" id="candModalName" style="font-size:18px"></div>
+              <div class="text-muted mt-1" id="candModalType"></div>
+              <hr>
+              <div id="candModalNote" style="white-space:pre-line"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ===== Data demo =====
+    const CANDIDATES = {
+      qh: [
+        { name: "Ông Nguyễn Văn A", note: "Đơn vị bầu cử số 01 • (Ảnh/tiểu sử dạng poster)", posterUrl: null },
+        { name: "Bà Trần Thị B", note: "Đơn vị bầu cử số 02 • (Ảnh/tiểu sử dạng poster)", posterUrl: null },
+        { name: "Ông Lê Văn C", note: "Đơn vị bầu cử số 03 • (Ảnh/tiểu sử dạng poster)", posterUrl: null },
+      ],
+      tp: [
+        { name: "Ông Phạm Văn D", note: "Ứng cử HĐND TP • Danh sách cấp thành phố", posterUrl: null },
+        { name: "Bà Nguyễn Thị E", note: "Ứng cử HĐND TP • Danh sách cấp thành phố", posterUrl: null },
+        { name: "Ông Đặng Văn F", note: "Ứng cử HĐND TP • Danh sách cấp thành phố", posterUrl: null },
+      ],
+      xa: [
+        { name: "Ông Nguyễn Quang Huy", note: "Ứng cử HĐND xã • Đơn vị bầu cử số 06", posterUrl: null },
+        { name: "Bà …", note: "Ứng cử HĐND xã • Đơn vị bầu cử số …", posterUrl: null },
+        { name: "Ông …", note: "Ứng cử HĐND xã • Đơn vị bầu cử số …", posterUrl: null },
+      ],
+    };
+
+    const TITLES = {
+      qh: "Quốc hội • Danh sách ứng cử",
+      tp: "HĐND Thành phố • Danh sách ứng cử",
+      xa: "HĐND cấp xã • Danh sách ứng cử",
+    };
+
+    const TYPE_LABEL = {
+      qh: "Nhóm: Ứng cử Quốc hội",
+      tp: "Nhóm: Ứng cử HĐND Thành phố",
+      xa: "Nhóm: Ứng cử HĐND cấp xã",
+    };
+
+    let currentType = "qh";
+
+    function renderCandidates(type){
+      currentType = type;
+      document.getElementById("candTitle").textContent = TITLES[type] || "Danh sách ứng cử";
+
+      const arr = CANDIDATES[type] || [];
+      const html = `
+        <div class="row g-3" id="candGrid">
+          ${arr.map((c, idx) => `
+            <div class="col-md-4">
+              <div class="card h-100 candidate-item border">
+                <div class="candidate-photo">Ảnh ${idx + 1}</div>
+                <div class="card-body">
+                  <div class="fw-bold" style="font-size:14px">${c.name}</div>
+                  <div class="text-muted" style="font-size:12px">${c.note}</div>
+                  <button class="stretched-link btn btn-link p-0" data-type="${type}" data-idx="${idx}" aria-label="Xem chi tiết"></button>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+      document.getElementById("candList").innerHTML = html;
+    }
+
+    function openCandidateModal(type, idx){
+      const c = (CANDIDATES[type] || [])[idx];
+      if(!c) return;
+
+      document.getElementById("candModalName").textContent = c.name || "";
+      document.getElementById("candModalType").textContent = TYPE_LABEL[type] || "";
+      document.getElementById("candModalNote").textContent = c.note || "";
+
+      const poster = document.getElementById("candModalPoster");
+      if(c.posterUrl){
+        poster.innerHTML = `<img src="${c.posterUrl}" alt="poster" class="img-fluid rounded" style="max-height:220px;object-fit:contain">`;
+      }else{
+        poster.textContent = "Ảnh/Poster";
+      }
+
+      bootstrap.Modal.getOrCreateInstance(document.getElementById("candidateModal")).show();
+    }
+
+    // Tra cứu demo
+    function maskCCCD(cccd){
+      const s = String(cccd || "").replace(/\s/g,"");
+      if(!s) return "";
+      if(s.length <= 4) return s;
+      return "*".repeat(s.length - 4) + s.slice(-4);
+    }
+    function mockLookup(){
+      const name = document.getElementById("inpName").value.trim();
+      const cccd = document.getElementById("inpCccd").value.trim();
+      const box = document.getElementById("resultBox");
+      const text = document.getElementById("resultText");
+
+      box.style.display = "block";
+      if(!name || !cccd){
+        text.innerHTML = "<span class='text-danger fw-bold'>Vui lòng nhập đầy đủ Họ tên và CCCD.</span>";
+        return;
+      }
+      text.innerHTML = `
+        Công dân <strong>${name}</strong> (CCCD: <strong>${maskCCCD(cccd)}</strong>) thuộc
+        <strong>Đơn vị bầu cử số 06</strong> • Điểm bỏ phiếu: <strong>Nhà văn hóa thôn …</strong>.
+      `;
+    }
+
+    // Init
+    document.addEventListener("DOMContentLoaded", () => {
+      // tabs click (event delegation)
+      document.getElementById("candidateTabs").addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-type]");
+        if(!btn) return;
+
+        document.querySelectorAll("#candidateTabs .nav-link").forEach(x => x.classList.remove("active"));
+        btn.classList.add("active");
+        renderCandidates(btn.dataset.type);
+      });
+
+      // click candidate card -> modal (event delegation)
+      document.addEventListener("click", (e) => {
+        const link = e.target.closest(".stretched-link[data-type][data-idx]");
+        if(!link) return;
+        openCandidateModal(link.dataset.type, Number(link.dataset.idx));
+      });
+
+      renderCandidates("qh");
+    });
+  </script>
+</body>
+</html>
